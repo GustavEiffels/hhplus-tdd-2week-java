@@ -1,11 +1,14 @@
-package com.tdd.hhplus_tdd_2week_java.entity;
+package com.tdd.hhplus_tdd_2week_java.domain.lecture;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import com.tdd.hhplus_tdd_2week_java.domain.BaseEntity;
+import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLecture;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +25,12 @@ import java.time.LocalDate;
  * startTime        : 09<= 시작 시간 <= 17
  * endTime          : 10<= 종료 시간 <= 18
  */
-public class Lecture extends BaseEntity{
+public class Lecture extends BaseEntity {
+
+    // 모든 Entity 의 id 값을 long 으로 사용한다는 보장이 없음
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     @Column(nullable = false)
     private String    name              ; // 강의 이름
@@ -40,5 +48,9 @@ public class Lecture extends BaseEntity{
     private int       startTime         ;
     @Column(nullable = false)
     private int       endTime           ;
+
+    @OneToMany(mappedBy = "lecture", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    public List<AppliedLecture> appliedLectures = new ArrayList<>();
 
 }

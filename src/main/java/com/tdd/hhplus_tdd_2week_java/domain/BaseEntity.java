@@ -1,4 +1,4 @@
-package com.tdd.hhplus_tdd_2week_java.entity;
+package com.tdd.hhplus_tdd_2week_java.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,9 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long pid;
+
+
 
     @CreatedDate
     @Column(updatable = false)

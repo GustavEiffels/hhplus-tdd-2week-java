@@ -1,9 +1,13 @@
-package com.tdd.hhplus_tdd_2week_java.entity;
+package com.tdd.hhplus_tdd_2week_java.domain.studuent;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import com.tdd.hhplus_tdd_2week_java.domain.BaseEntity;
+import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLecture;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,9 +25,20 @@ import lombok.*;
  *
  */
 public class Student extends BaseEntity {
+
+    // 모든 Entity 의 id 값을 long 으로 사용한다는 보장이 없음
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String studentCode;
+
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    public List<AppliedLecture> appliedLectures = new ArrayList<>();
 }

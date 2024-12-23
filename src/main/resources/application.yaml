@@ -1,9 +1,8 @@
-# application 이름
 spring:
   application:
     name: hhplus_tdd_2week_java
   datasource:
-    url: jdbc:mysql://localhost:33306/hhplus_2week?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    url: jdbc:mysql://localhost:33306/hhplus_2week?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8
     username: xiuki
     password: Ssw!234!234
     driver-class-name: com.mysql.cj.jdbc.Driver
