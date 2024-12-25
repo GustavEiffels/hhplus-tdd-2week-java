@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * instructorName   : 강사 이름 한글 또는 영어이고 50자 이내여야 할것
  * location         : 강의실 위치 이름은 20 자리 이내 이어야 할 것
  * lectureDate      : 생성시  현재 날짜보다 뒤에 있어야함 ( 같거나 앞이면 안됨 )
- * day              : mon, tue, wed,thr, fri 만 존재
+ * day              :  LocalDate 의 getDayOfWeek 을 String 으로 변환한 값
  * isEnrollmentOpen : 강의 수강 가능한지-> default false
  * startTime        : 09<= 시작 시간 <= 17
  * endTime          : 10<= 종료 시간 <= 18
