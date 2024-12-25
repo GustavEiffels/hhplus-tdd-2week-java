@@ -149,5 +149,35 @@ public class Lecture extends BaseEntity {
         }
     }
 
+    public void updateLectureName(String lectureNm){
+        this.name = isValid_LectureNm(lectureNm);
+    }
+
+    public void updateInstructorName(String instructorName){
+        this.name = isValid_InstructorName(instructorName);
+    }
+
+    public void updateLocation(String location){
+        this.location = isValid_Location(location);
+    }
+
+    public void updateLectureDate(LocalDate lectureDate){
+        this.lectureDate = isValid_LectureDate(lectureDate);
+        this.day = lectureDate.getDayOfWeek().toString();
+    }
+
+    public void updateStartTime(int startTime){
+        this.startTime = isValid_StartTime(startTime);
+        isValid_RunningTime(startTime,this.endTime);
+    }
+
+    public void updateEndTime(int endTime){
+        this.startTime = isValid_EndTime(endTime);
+        isValid_RunningTime(this.startTime,endTime);
+    }
+
+    public void updateEnrollmentOpen(){
+        this.isEnrollmentOpen = !this.isEnrollmentOpen;
+    }
 
 }
