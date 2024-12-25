@@ -31,6 +31,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+<<<<<<< HEAD
 
 
 	// ** QueryDSL
@@ -41,6 +42,8 @@ dependencies {
 
 	// H2
 	implementation 'com.h2database:h2'
+=======
+>>>>>>> 65b11e5 ([reset] pr 실수로 master 브랜치 초기화)
 }
 
 tasks.named('test') {
