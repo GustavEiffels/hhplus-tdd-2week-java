@@ -98,6 +98,7 @@ public class Lecture extends BaseEntity {
                 "^[a-zA-Z가-힣]{2,50}$",
                 LECTURE_STATUS.INVALID_INSTRUCTOR_NAME);
     }
+
     public String isValid_LectureNm(String lectureNm) {
         return isValid_StringTypeFields(
                 lectureNm,

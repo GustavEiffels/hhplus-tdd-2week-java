@@ -56,11 +56,11 @@ class LectureTableDomainTest {
     }
     @Test
     void 강의_이름은_2글자_이상_50자이하의_영어_한글_숫자만_사용한문자일_문자일_것(){
-        String emptyNm = "";
-        String nullNm  = null;
-        String underOneChar = "티";
-        String over50char   = testStringGenerator(51);
-        String specialChar  = "특강!!";
+        String emptyNm = ""; // 강의 이름 빈값
+        String nullNm  = null; // null
+        String underOneChar = "티"; // 강의 이름 한글자
+        String over50char   = testStringGenerator(51); // 강의 이름 50개 이상
+        String specialChar  = "특강!!"; // 특수문자
         name_exceptionMatcher(emptyNm);
         name_exceptionMatcher(nullNm);
         name_exceptionMatcher(underOneChar);
@@ -89,11 +89,11 @@ class LectureTableDomainTest {
     }
     @Test
     void instructorName_강사_이름_한글_또는_영어이고_50자_이내여야_할것(){
-        String empty_val  = "";
-        String empty_null = null;
-        String under_2_character = "가";
-        String over_50_character = testStringGenerator(51);
-        String only_KoEn = "강사1";
+        String empty_val  = ""; // 빈값
+        String empty_null = null; // 이름 없음
+        String under_2_character = "가"; // 강사이름 한글자
+        String over_50_character = testStringGenerator(51); // 강사이름 50 개 초과
+        String only_KoEn = "강사1"; //강사 이름에 숫자 들어감
         instructorName_exceptionMatcher(empty_val);
         instructorName_exceptionMatcher(empty_null);
         instructorName_exceptionMatcher(under_2_character);
@@ -167,11 +167,11 @@ class LectureTableDomainTest {
 
     @Test
     void lectureDate_ExceptionTest(){
-        LocalDate nullDate = null;
-        LocalDate pastDate = LocalDate.now().minusDays(1);
-        LocalDate today    = LocalDate.now();
-        LocalDate sat      = LocalDate.of(2099,3,7);
-        LocalDate sun      = LocalDate.of(2099,3,8);
+        LocalDate nullDate = null; // null
+        LocalDate pastDate = LocalDate.now().minusDays(1); // 과거
+        LocalDate today    = LocalDate.now(); // 오늘
+        LocalDate sat      = LocalDate.of(2099,3,7); // 토요일
+        LocalDate sun      = LocalDate.of(2099,3,8); // 일요일
         lectureDate_exceptionMatcher(nullDate);
         lectureDate_exceptionMatcher(pastDate);
         lectureDate_exceptionMatcher(today);
