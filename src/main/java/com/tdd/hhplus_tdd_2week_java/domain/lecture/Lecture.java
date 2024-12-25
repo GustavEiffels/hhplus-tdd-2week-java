@@ -176,8 +176,8 @@ public class Lecture extends BaseEntity {
         isValid_RunningTime(this.startTime,endTime);
     }
 
-    public void updateEnrollmentOpen(){
-        this.isEnrollmentOpen = !this.isEnrollmentOpen;
+    public void updateEnrollmentOpen(boolean isEnrollmentOpen){
+        this.isEnrollmentOpen = isEnrollmentOpen;
     }
 
 }
