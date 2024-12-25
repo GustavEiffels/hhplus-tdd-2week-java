@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: hhplus_tdd_2week_java
+  datasource:
+    url: jdbc:mysql://localhost:33306/hhplus_2week?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+    username: xiuki
+    password: Ssw!234!234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+
