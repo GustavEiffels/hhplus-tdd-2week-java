@@ -20,7 +20,7 @@ public class LectureResult {
 
     private LocalDate lectureDate       ;
 
-    private String    day               ;
+    private String    dayInfo               ;
 
     private Boolean   isEnrollmentOpen  ;
 

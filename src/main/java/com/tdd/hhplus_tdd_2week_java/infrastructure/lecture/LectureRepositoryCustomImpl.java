@@ -51,7 +51,7 @@ public class LectureRepositoryCustomImpl implements LectureRepositoryCustom {
                         ,lecture.instructorName.as("instructorName")
                         ,lecture.location.as("location")
                         ,lecture.lectureDate.as("lectureDate")
-                        ,lecture.day.as("day")
+                        ,lecture.dayInfo.as("dayInfo")
                         ,lecture.startTime.as("startTime")
                         ,lecture.endTime.as("endTime")
                         ,lecture.isEnrollmentOpen.as("isEnrollmentOpen")

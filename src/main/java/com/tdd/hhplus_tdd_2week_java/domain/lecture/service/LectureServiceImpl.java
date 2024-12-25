@@ -81,7 +81,7 @@ public class LectureServiceImpl implements LectureService {
             lecture.updateInstructorName(updateParam.getInstructorName());
         }
         if(hasText(updateParam.getLocation())){
-            lecture.updateInstructorName(updateParam.getLocation());
+            lecture.updateLocation(updateParam.getLocation());
         }
         if(updateParam.getLectureDate() != null){
             lecture.updateLectureDate(updateParam.getLectureDate());
@@ -92,6 +92,7 @@ public class LectureServiceImpl implements LectureService {
         if( updateParam.getEndTime() != null ){
             lecture.updateEndTime(updateParam.getEndTime());
         }
+
         return convertToDto(lecture);
     }
 
@@ -139,6 +140,7 @@ public class LectureServiceImpl implements LectureService {
                 .instructorName(lecture.getInstructorName())
                 .location(lecture.getLocation())
                 .lectureDate(lecture.getLectureDate())
+                .dayInfo(lecture.getDayInfo())
                 .startTime(lecture.getStartTime())
                 .endTime(lecture.getEndTime())
                 .build();
