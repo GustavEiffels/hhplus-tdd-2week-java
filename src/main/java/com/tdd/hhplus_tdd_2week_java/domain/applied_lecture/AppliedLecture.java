@@ -36,6 +36,4 @@ public class AppliedLecture extends BaseEntity {
     private int       startTime;
 
     private int       endTime;
-
-
 }
