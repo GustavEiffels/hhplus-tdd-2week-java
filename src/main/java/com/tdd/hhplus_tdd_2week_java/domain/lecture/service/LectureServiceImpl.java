@@ -20,7 +20,7 @@ import static org.springframework.util.StringUtils.*;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository  repository ;
-    private final LectureValidate    validate   ;
+    private final LectureServiceValidate validate   ;
 
     /**
      * 1. 같은 공간, 같은 날짜에 강의 있는지 확인
@@ -46,8 +46,8 @@ public class LectureServiceImpl implements LectureService {
             validate.isLectureConflict(
                     findLectureSamePlace.getStartTime(),
                     findLectureSamePlace.getEndTime(),
-                    newLectureParam.getStartTime(),
-                    newLectureParam.getEndTime()
+                    validate.isConditionFieldNotNull(newLectureParam.getStartTime()),
+                    validate.isConditionFieldNotNull(newLectureParam.getEndTime())
                     );
         }
         // 3. 그렇지 않은 경우 강의 생성 성공
@@ -55,6 +55,14 @@ public class LectureServiceImpl implements LectureService {
         return convertToDto(newLecture);
     }
 
+    /**
+     * 1. 조회 조건이 비어있지는 않은지 확인
+     * 2. 조건으로 특정 lecture 를 조회
+     * 3. 수정 조건에 맞게 수정
+     * @param findParam
+     * @param updateParam
+     * @return
+     */
     @Override
     public LectureResult update(LectureParam findParam, LectureParam updateParam) {
         validate.isConditionAssign(findParam);
@@ -84,16 +92,27 @@ public class LectureServiceImpl implements LectureService {
         if( updateParam.getEndTime() != null ){
             lecture.updateEndTime(updateParam.getEndTime());
         }
-
         return convertToDto(lecture);
     }
 
+    /**
+     * 1. 조회 조건 비어 있는지 확인
+     * 2. 조회 -> 다건
+     * @param param
+     * @return
+     */
     @Override
     public List<LectureResult>    readAllByCondition(LectureParam param) {
         validate.isConditionAssign(param);
         return repository.findAllByCondition(param);
     }
 
+    /**
+     * 1. 조회 조건 비어 있는지 확인
+     * 2. 조회 -> 단건
+     * @param param
+     * @return
+     */
     @Override
     public Optional<LectureResult> readByCondition(LectureParam param) {
         validate.isConditionAssign(param);

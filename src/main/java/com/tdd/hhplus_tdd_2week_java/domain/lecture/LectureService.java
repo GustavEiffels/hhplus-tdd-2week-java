@@ -14,12 +14,10 @@ public interface LectureService {
     List<LectureResult>     readAllByCondition(LectureParam param);
 
 
-
-
     Optional<LectureResult> readByCondition(LectureParam param);
 
 
-    Lecture convertToEntity(LectureParam lectureParam);
+    Lecture       convertToEntity(LectureParam lectureParam);
     LectureResult convertToDto(Lecture lecture);
 
 }
