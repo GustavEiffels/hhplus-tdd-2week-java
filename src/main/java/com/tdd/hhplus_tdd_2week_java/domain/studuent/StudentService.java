@@ -7,7 +7,6 @@ public interface StudentService {
 
     StudentResult create(StudentParam studentParam);
 
-    StudentResult update(StudentParam findParam, StudentParam updateParam);
 
     StudentResult convertToDto(Student student);
 

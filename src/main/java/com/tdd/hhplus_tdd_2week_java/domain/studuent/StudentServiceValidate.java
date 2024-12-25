@@ -7,4 +7,6 @@ public interface StudentServiceValidate {
     void isConditionAssign(StudentParam conditionParam);
 
     String isConditionFieldNotNull(String fieldValue);
+
+    Long isConditionFieldNotNull(Long fieldValue);
 }

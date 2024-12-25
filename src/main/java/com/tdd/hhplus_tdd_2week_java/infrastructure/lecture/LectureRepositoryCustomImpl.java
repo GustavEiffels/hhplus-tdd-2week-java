@@ -4,12 +4,9 @@ import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.QLecture;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,7 +15,6 @@ import java.util.Optional;
 import static com.tdd.hhplus_tdd_2week_java.domain.lecture.QLecture.lecture;
 import static org.springframework.util.StringUtils.*;
 
-@Slf4j
 @RequiredArgsConstructor
 public class LectureRepositoryCustomImpl implements LectureRepositoryCustom {
     private final JPAQueryFactory dsl;
