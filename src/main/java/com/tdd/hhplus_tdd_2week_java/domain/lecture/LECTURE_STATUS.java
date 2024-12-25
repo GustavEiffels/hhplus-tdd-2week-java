@@ -1,0 +1,15 @@
+package com.tdd.hhplus_tdd_2week_java.domain.lecture;
+
+public enum LECTURE_STATUS {
+    VALUE_IS_NULL,
+    INVALID_INSTRUCTOR_NAME,
+    INVALID_LECTURE_NAME,
+    INVALID_LOCATION_NAME,
+    INVALID_LECTURE_DATE,
+    INVALID_START_TIME,
+    INVALID_END_TIME,
+
+    INVALID_RUNNING_TIME,
+
+
+}
