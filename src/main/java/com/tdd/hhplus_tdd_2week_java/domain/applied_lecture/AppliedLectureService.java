@@ -12,4 +12,8 @@ public interface AppliedLectureService {
     AppliedLectureResult update(AppliedLectureParam findParam, AppliedLectureParam updateParam);
 
     Optional<AppliedLectureResult> findByCondition(AppliedLectureParam findParam);
+
+    AppliedLectureResult convertToDto(AppliedLecture appliedLecture);
+
+    AppliedLecture convertToEntity(AppliedLectureParam appliedLectureParam);
 }
