@@ -4,6 +4,9 @@ package com.tdd.hhplus_tdd_2week_java.infrastructure.student;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.QAppliedLecture;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.QLecture;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
@@ -12,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.QAppliedLecture.appliedLecture;
+import static com.tdd.hhplus_tdd_2week_java.domain.lecture.QLecture.lecture;
 import static com.tdd.hhplus_tdd_2week_java.domain.studuent.QStudent.student;
 import static org.springframework.util.StringUtils.hasText;
 
@@ -25,6 +30,7 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
         return Optional.ofNullable(
             dsl.selectFrom(student)
                     .where(
+                            idEq(condition.getId()),
                             nameEq(condition.getName()),
                             studentCodeEq(condition.getStudentCode()))
                     .fetchOne()
@@ -44,6 +50,7 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
                         )
                         .from(student)
                         .where(
+                                idEq(condition.getId()),
                                 nameEq(condition.getName()),
                                 studentCodeEq(condition.getStudentCode()))
                         .fetchOne()
@@ -54,6 +61,7 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
     public List<Student> findAllByCondition(StudentParam condition) {
         return dsl.selectFrom(student)
                 .where(
+                        idEq(condition.getId()),
                         nameEq(condition.getName()),
                         studentCodeEq(condition.getStudentCode())).fetch();
     }
@@ -71,8 +79,31 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
                         )
                         .from(student)
                 .where(
+                        idEq(condition.getId()),
                         nameEq(condition.getName()),
                         studentCodeEq(condition.getStudentCode())).fetch();
+    }
+
+    @Override
+    public List<LectureResult> getLectureResultByUserId(Long userid) {
+        return dsl.select(
+                        Projections.bean(
+                                LectureResult.class,
+                                lecture.id.as("id"),
+                                lecture.name.as("name"),
+                                lecture.instructorName.as("instructorName"),
+                                lecture.location.as("location"),
+                                lecture.lectureDate.as("lectureDate"),
+                                lecture.dayInfo.as("dayInfo"),
+                                lecture.startTime.as("startTime"),
+                                lecture.endTime.as("endTime"),
+                                lecture.isEnrollmentOpen.as("isEnrollmentOpen")
+                        )
+                )
+                .from(student)
+                .innerJoin(appliedLecture).on(appliedLecture.student.id.eq(userid))
+                .innerJoin(lecture).on(lecture.eq(appliedLecture.lecture))
+                .fetch();
     }
 
     private BooleanExpression idEq(Long id){

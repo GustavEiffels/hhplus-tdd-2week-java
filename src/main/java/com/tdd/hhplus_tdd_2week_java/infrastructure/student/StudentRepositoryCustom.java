@@ -1,5 +1,7 @@
 package com.tdd.hhplus_tdd_2week_java.infrastructure.student;
 
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
@@ -14,9 +16,12 @@ public interface StudentRepositoryCustom {
     Optional<StudentResult> findByConditionWithResult(StudentParam condition);
 
 
-    List<Student> findAllByCondition(StudentParam condition);
+    List<Student>       findAllByCondition(StudentParam condition);
 
     List<StudentResult> findAllByConditionWithResult(StudentParam condition);
+
+
+    List<LectureResult> getLectureResultByUserId(Long userid);
 
 
 }

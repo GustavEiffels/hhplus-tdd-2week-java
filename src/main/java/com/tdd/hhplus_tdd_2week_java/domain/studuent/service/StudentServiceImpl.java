@@ -1,6 +1,7 @@
 package com.tdd.hhplus_tdd_2week_java.domain.studuent.service;
 
 import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.StudentSettingException;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentService;
@@ -46,6 +47,11 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<StudentResult> readAllByConditionWithResult(StudentParam condition) {
         return repository.findAllByConditionWithResult(condition);
+    }
+
+    @Override
+    public List<LectureResult> readLectureResultListById(Long userid) {
+        return repository.getLectureResultByUserId(userid);
     }
 
     @Override

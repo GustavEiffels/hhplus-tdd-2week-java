@@ -1,5 +1,6 @@
 package com.tdd.hhplus_tdd_2week_java.domain.studuent;
 
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 
@@ -23,6 +24,10 @@ public interface StudentService {
 
     // READ ALL
     List<StudentResult> readAllByConditionWithResult(StudentParam condition);
+
+
+    // JOIN
+    List<LectureResult> readLectureResultListById(Long userid);
 
 
 

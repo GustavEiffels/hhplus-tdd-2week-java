@@ -1,6 +1,7 @@
 package com.tdd.hhplus_tdd_2week_java.application.student;
 
 import com.tdd.hhplus_tdd_2week_java.common.ResponseDto;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,15 +22,8 @@ public interface StudentApiDto {
     @Getter
     @SuperBuilder
     class FindAppliedRes extends ResponseDto {
-        private List<LectureInfo> lectureInfoList;
+        private List<LectureResult> lectureInfoList;
     }
 
-    @Getter
-    @Setter
-    @Builder
-    class LectureInfo{
-        private String lectureName   ;
-        private String instructorName;
-        private Long   id            ;
-    }
+
 }

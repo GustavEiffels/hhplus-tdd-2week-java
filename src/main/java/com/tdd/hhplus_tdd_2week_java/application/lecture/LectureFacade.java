@@ -5,18 +5,23 @@ import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureService;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.service.LectureServiceValidate;
+import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentService;
+import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentServiceValidate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class LectureFacade {
 
     private final LectureService lectureService;
     private final LectureServiceValidate lectureServiceValidate;
-
+    private final StudentService studentService;
+    private final StudentServiceValidate studentServiceValidate;
 
 
     /**
