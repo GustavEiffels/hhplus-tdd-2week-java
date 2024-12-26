@@ -1,6 +1,8 @@
 package com.tdd.hhplus_tdd_2week_java.application.lecture;
 
 import com.tdd.hhplus_tdd_2week_java.common.ResponseDto;
+import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.AppliedLectureSettingException;
+import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.APPLIED_LECTURE_STATUS;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLecture;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLectureRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLectureService;
@@ -66,12 +68,17 @@ class LectureFacadeTest {
 
     /**
      * 날짜 기준으로 신청 가능 목록 API
+     * findListByLecture
      */
     @Test
     void findListByLecture(){
         Lecture lecture_0 = createLecture(2024,12,31,10,11);
         Lecture lecture_1 = createLecture(2024,12,31,12,13);
         Lecture lecture_2 = createLecture(2024,12,31,14,17);
+        Lecture lecture_3 = createLecture(2024,12,30,14,17); // 날짜 안맞음
+        Lecture lecture_4 = createLecture(2024,12,31,11,12); // isEnrollmentOpen 이 false 임
+        lecture_4.updateEnrollmentOpen(false);
+        lectureRepository.save(lecture_4);
 
         LectureApiDto.FindByLocalReq req =  LectureApiDto.FindByLocalReq.builder()
                 .localDate(LocalDate.of(2024,12,31))
@@ -79,6 +86,34 @@ class LectureFacadeTest {
 
         LectureApiDto.FindByLocalRes responseDto = lectureFacade.findListByLecture(req);
         Assertions.assertEquals(3,responseDto.getLectureList().size());
+    }
+
+    @Test
+    void 같은_사용자가_동일한_특강에_대해_신청_성공못하게_하기(){
+
+        // 0. lecture 와  student 생성
+        Lecture createLecture = createLecture(2024,12,31,10,11);
+        Student createStudent = createStudent("김하수","202202022");
+
+
+        // 1. RequestDto 생성
+        LectureApiDto.ApplyLectureReq req = LectureApiDto.ApplyLectureReq.builder()
+                .lectureId(createLecture.getId())
+                .userId(createStudent.getId())
+                .build();
+
+        lectureFacade.applyLecture(req);
+
+
+            for (int i = 0; i < 4; i++) {
+                AppliedLectureSettingException exception =
+                        Assertions.assertThrows(AppliedLectureSettingException.class, () -> {
+                    lectureFacade.applyLecture(req);
+                });
+                System.out.println(exception.getStatus());
+//                Assertions.assertEquals(APPLIED_LECTURE_STATUS.ALREADY_EXIST,exception.getStatus(),"이미 신청한 강의");
+            }
+
     }
 
 }

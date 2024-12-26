@@ -20,14 +20,14 @@ public class StudentFacade {
 
 
     /**
-     *
      * @param request
      * @return
      */
     public ResponseDto findAppliedLecture(StudentApiDto.FindAppliedReq request){
-
+        // 존재하는 학생인지 확인
         Student existStudent = studentService.isExistStudent(request.getUserid());
 
+        // 학생 아이디로
         List<LectureResult> lectureResultList = studentService.readLectureResultListById(existStudent.getId());
 
         return StudentApiDto.FindAppliedRes.builder().lectureInfoList(lectureResultList).build();

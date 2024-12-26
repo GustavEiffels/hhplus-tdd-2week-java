@@ -1,11 +1,11 @@
-package com.tdd.hhplus_tdd_2week_java.domain.studuent.service;
+package com.tdd.hhplus_tdd_2week_java.domain.studuent;
 
 import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.StudentSettingException;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentService;
-import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentServiceValidate;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.*;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository repository;
-    private final StudentServiceValidate studentServiceValidate;
+    private final CommonValidation validation;
 
     @Override
     public StudentResult create(StudentParam studentParam) {
@@ -35,20 +35,6 @@ public class StudentServiceImpl implements StudentService {
         return repository.findByCondition(condition);
     }
 
-    @Override
-    public Optional<StudentResult> readByConditionWithResult(StudentParam condition) {
-        return repository.findByConditionWithResult(condition);
-    }
-
-    @Override
-    public List<Student> readAllByCondition(StudentParam condition) {
-        return repository.findAllByCondition(condition);
-    }
-
-    @Override
-    public List<StudentResult> readAllByConditionWithResult(StudentParam condition) {
-        return repository.findAllByConditionWithResult(condition);
-    }
 
     @Override
     public List<LectureResult> readLectureResultListById(Long userid) {
@@ -57,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student isExistStudent(Long userId) {
-        studentServiceValidate.isConditionFieldNotNull(userId);
+        validation.isConditionFieldNotNull(userId);
         Optional<Student> optionalStudent = readByCondition(StudentParam.builder().id(userId).build());
 
         if(optionalStudent.isEmpty()){
@@ -68,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<LectureResult> getTodaySchedule(Long userId, LocalDate localDate) {
+    public List<LectureResult> getScheduleByLocalDate(Long userId, LocalDate localDate) {
         isExistStudent(userId);
 
         if(localDate == null){

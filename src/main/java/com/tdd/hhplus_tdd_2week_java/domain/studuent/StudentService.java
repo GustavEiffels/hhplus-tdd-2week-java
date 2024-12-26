@@ -12,30 +12,17 @@ public interface StudentService {
 
     StudentResult create(StudentParam studentParam);
 
-
     // READ
     Optional<Student> readByCondition(StudentParam condition);
-
-    // READ
-    Optional<StudentResult> readByConditionWithResult(StudentParam condition);
-
-
-    // READ ALL
-    List<Student> readAllByCondition(StudentParam condition);
-
-    // READ ALL
-    List<StudentResult> readAllByConditionWithResult(StudentParam condition);
-
 
     // JOIN
     List<LectureResult> readLectureResultListById(Long userid);
 
+    List<LectureResult> getScheduleByLocalDate(Long userId, LocalDate localDate);
+
 
     // isExistStudent
     Student isExistStudent(Long userId);
-
-
-    List<LectureResult> getTodaySchedule(Long userId, LocalDate localDate);
 
 
     StudentResult convertToDto(Student student);

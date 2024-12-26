@@ -26,9 +26,6 @@ public class StudentSettingException extends DomainSettingException{
     }
 
     private static String convertMessage(STUDENT_STATUS status,String fieldName){
-        if(status.equals(STUDENT_STATUS.VALUE_IS_NULL)){
-            return "["+fieldName+"] 값을 받지 않았습니다.";
-        }
-        return null;
+        return status.name();
     }
 }

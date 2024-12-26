@@ -2,9 +2,7 @@ package com.tdd.hhplus_tdd_2week_java.application.lecture;
 
 import com.tdd.hhplus_tdd_2week_java.common.ResponseDto;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
@@ -29,6 +27,8 @@ public interface LectureApiDto {
     @Getter
     @Setter
     @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
     class ApplyLectureReq{
         private Long userId;
         private Long lectureId;

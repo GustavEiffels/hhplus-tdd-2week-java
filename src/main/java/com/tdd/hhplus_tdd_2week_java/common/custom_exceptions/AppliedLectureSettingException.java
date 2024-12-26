@@ -14,7 +14,7 @@ public class AppliedLectureSettingException extends DomainSettingException{
         this.status = status;
     }
     private static String convertMessage(APPLIED_LECTURE_STATUS status){
-        return "TEST";
+        return status.name();
     }
 
 

@@ -1,4 +1,4 @@
-package com.tdd.hhplus_tdd_2week_java.domain.studuent.service;
+package com.tdd.hhplus_tdd_2week_java.domain.studuent;
 
 import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.StudentSettingException;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS;

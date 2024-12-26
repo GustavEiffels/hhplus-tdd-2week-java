@@ -1,11 +1,8 @@
-package com.tdd.hhplus_tdd_2week_java.domain.lecture.service;
+package com.tdd.hhplus_tdd_2week_java.domain.lecture;
 
 
 import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.LectureSettingException;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LECTURE_STATUS;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureRepository;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureService;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +17,7 @@ import static org.springframework.util.StringUtils.*;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository  repository     ;
-    private final LectureServiceValidate validate   ;
+    private final CommonValidation validate   ;
 
     @Override
     public LectureResult create(LectureParam lectureParam) {

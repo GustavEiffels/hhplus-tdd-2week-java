@@ -1,8 +1,9 @@
-package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.service;
+package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture;
 
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.*;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureResult;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
 public class AppliedLectureServiceImpl implements AppliedLectureService {
 
     private final AppliedLectureRepository repository;
-    private final AppliedLectureServiceValidation validation;
+    private final CommonValidation validation;
 
     /**
      * CREATE
@@ -39,16 +40,7 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         return exist;
     }
 
-    /**
-     * UPDATE
-     * @param exist
-     * @param updateParam
-     * @return
-     */
-    @Override
-    public AppliedLectureResult updateWithResult(AppliedLecture exist, AppliedLectureParam updateParam) {
-        return convertToDto(updateWithEntity(exist,updateParam));
-    }
+
 
     /**
      * READ
@@ -60,25 +52,6 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         return repository.findByCondition(condition);
     }
 
-    /**
-     * READ
-     * @param condition
-     * @return
-     */
-    @Override
-    public Optional<AppliedLectureResult> readWithResult(AppliedLectureParam condition) {
-        return repository.findByConditionWithResult(condition);
-    }
-
-    /**
-     * READ ALL
-     * @param condition
-     * @return
-     */
-    @Override
-    public List<AppliedLecture> readAllWithEntity(AppliedLectureParam condition) {
-        return repository.findAllByCondition(condition);
-    }
 
     @Override
     public List<AppliedLecture> readAllWithEntityLock(AppliedLectureParam condition) {
@@ -86,26 +59,10 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
     }
 
 
-    /**
-     * READ ALL
-     * @param condition
-     * @return
-     */
-    @Override
-    public List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition) {
-        return repository.findAllByConditionWithResult(condition);
-    }
-
-    @Override
-    public Optional<AppliedLecture> isExistAppliedLecture(AppliedLectureParam appliedLectureParam) {
-        validation.isConditionFieldNotNull(appliedLectureParam.getStudent());
-        validation.isConditionFieldNotNull(appliedLectureParam.getLecture());
-        return readWithEntity(appliedLectureParam);
-    }
 
     @Override
     public Optional<AppliedLecture> isExistAppliedLectureWithLock(AppliedLectureParam appliedLectureParam) {
-        return Optional.empty();
+        return repository.findByIdWithLock(appliedLectureParam);
     }
 
     @Override

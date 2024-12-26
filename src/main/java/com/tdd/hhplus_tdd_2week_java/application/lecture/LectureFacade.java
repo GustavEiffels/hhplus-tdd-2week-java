@@ -7,11 +7,12 @@ import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.APPLIED_LECTURE_STAT
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLecture;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLectureService;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureService;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.service.LectureServiceValidate;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureServiceValidate;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentService;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +30,20 @@ import static com.tdd.hhplus_tdd_2week_java.domain.lecture.LECTURE_STATUS.PARTIC
 public class LectureFacade {
 
     private final LectureService lectureService;
-    private final LectureServiceValidate lectureServiceValidate;
+    private final CommonValidation validation;
+    private final LectureServiceValidate lectureValidation;
     private final StudentService studentService;
     private final AppliedLectureService appliedLectureService;
 
 
     /**
      * 날짜 기준으로 신청 가능 목록 API
-     * @param request
+     * @param
      * @return
      */
     public LectureApiDto.FindByLocalRes findListByLecture(LectureApiDto.FindByLocalReq request){
         // request 객체 null 인지 확인
-        lectureServiceValidate.isConditionFieldNotNull(request.getLocalDate());
+        validation.isConditionFieldNotNull(request.getLocalDate());
 
         // 검색 조건 생성
         LectureParam condition = LectureParam.builder()
@@ -90,8 +92,8 @@ public class LectureFacade {
         }
 
         // 오늘 강의랑 겹치는게 있는지 확인
-        for(LectureResult lectureResult : studentService.getTodaySchedule(student.getId(),lecture.getLectureDate())){
-            lectureServiceValidate.isLectureConflict(
+        for(LectureResult lectureResult : studentService.getScheduleByLocalDate(student.getId(),lecture.getLectureDate())){
+            lectureValidation.isLectureConflict(
                     lectureResult.getStartTime(),
                     lectureResult.getEndTime(),
                     lecture.getStartTime(),

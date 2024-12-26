@@ -18,25 +18,11 @@ public interface AppliedLectureService {
     // UPDATE
     AppliedLecture      updateWithEntity(AppliedLecture exist, AppliedLectureParam updateParam);
 
-    AppliedLectureResult updateWithResult(AppliedLecture exist, AppliedLectureParam updateParam);
-
-
     // READ
     Optional<AppliedLecture> readWithEntity(AppliedLectureParam condition);
 
-    // READ
-    Optional<AppliedLectureResult> readWithResult(AppliedLectureParam condition);
-
-    // READ ALL
-    List<AppliedLecture> readAllWithEntity(AppliedLectureParam condition);
 
     List<AppliedLecture> readAllWithEntityLock(AppliedLectureParam condition);
-
-    // READ ALL
-    List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition);
-
-
-    Optional<AppliedLecture> isExistAppliedLecture(AppliedLectureParam appliedLectureParam);
 
     Optional<AppliedLecture> isExistAppliedLectureWithLock(AppliedLectureParam appliedLectureParam);
 
