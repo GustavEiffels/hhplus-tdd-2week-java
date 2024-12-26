@@ -38,20 +38,65 @@ public class LectureRepositoryCustomImpl implements LectureRepositoryCustom {
     }
 
     @Override
-    public List<LectureResult> findAllByCondition(LectureParam param) {
+    public Optional<LectureResult> findByConditionWithResult(LectureParam param) {
+        return Optional.ofNullable(
+                dsl.select(
+                                Projections.bean(
+                                        LectureResult.class
+                                        ,lecture.id.as("id")
+                                        ,lecture.name.as("name")
+                                        ,lecture.instructorName.as("instructorName")
+                                        ,lecture.location.as("location")
+                                        ,lecture.lectureDate.as("lectureDate")
+                                        ,lecture.dayInfo.as("dayInfo")
+                                        ,lecture.startTime.as("startTime")
+                                        ,lecture.endTime.as("endTime")
+                                        ,lecture.isEnrollmentOpen.as("isEnrollmentOpen")
+                                )).from(lecture)
+                        .where(
+                                idEq(param.getId()),
+                                nameEq(param.getName()),
+                                instructorNameEq(param.getInstructorName()),
+                                locationEq(param.getLocation()),
+                                lectureDateEq(param.getLectureDate()),
+                                startTimeEq(param.getStartTime()),
+                                endTimeEq(param.getEndTime()),
+                                isEnrollmentOpenEq(param.getIsEnrollmentOpen())
+                        )
+                        .fetchOne());
+    }
+
+    @Override
+    public List<Lecture> findAllByCondition(LectureParam param) {
+        return dsl.selectFrom(lecture)
+                .where(
+                        idEq(param.getId()),
+                        nameEq(param.getName()),
+                        instructorNameEq(param.getInstructorName()),
+                        locationEq(param.getLocation()),
+                        lectureDateEq(param.getLectureDate()),
+                        startTimeEq(param.getStartTime()),
+                        endTimeEq(param.getEndTime()),
+                        isEnrollmentOpenEq(param.getIsEnrollmentOpen())
+                )
+                .fetch();
+    }
+
+    @Override
+    public List<LectureResult> findAllByConditionWithResult(LectureParam param) {
         return dsl.select(
-                Projections.bean(
-                        LectureResult.class
-                        ,lecture.id.as("id")
-                        ,lecture.name.as("name")
-                        ,lecture.instructorName.as("instructorName")
-                        ,lecture.location.as("location")
-                        ,lecture.lectureDate.as("lectureDate")
-                        ,lecture.dayInfo.as("dayInfo")
-                        ,lecture.startTime.as("startTime")
-                        ,lecture.endTime.as("endTime")
-                        ,lecture.isEnrollmentOpen.as("isEnrollmentOpen")
-                )).from(lecture)
+                        Projections.bean(
+                                LectureResult.class
+                                ,lecture.id.as("id")
+                                ,lecture.name.as("name")
+                                ,lecture.instructorName.as("instructorName")
+                                ,lecture.location.as("location")
+                                ,lecture.lectureDate.as("lectureDate")
+                                ,lecture.dayInfo.as("dayInfo")
+                                ,lecture.startTime.as("startTime")
+                                ,lecture.endTime.as("endTime")
+                                ,lecture.isEnrollmentOpen.as("isEnrollmentOpen")
+                        )).from(lecture)
                 .where(
                         idEq(param.getId()),
                         nameEq(param.getName()),

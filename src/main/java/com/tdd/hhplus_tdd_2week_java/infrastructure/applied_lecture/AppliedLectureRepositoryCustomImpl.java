@@ -42,7 +42,31 @@ public class AppliedLectureRepositoryCustomImpl implements AppliedLectureReposit
     }
 
     @Override
-    public List<AppliedLectureResult> findAllByCondition(AppliedLectureParam param) {
+    public Optional<AppliedLectureResult> findByConditionWithResult(AppliedLectureParam param) {
+        return Optional.ofNullable(
+                dsl.select(
+                        Projections.bean(
+                                AppliedLectureResult.class
+                                , appliedLecture.id.as("id")
+                                , appliedLecture.student.as("student")
+                                , appliedLecture.lecture.as("lecture")
+                                , appliedLecture.lectureDate.as("lectureDate")
+                                , appliedLecture.startTime.as("startTime")
+                                , appliedLecture.endTime.as("endTime")
+                        )
+                ).from(appliedLecture)
+                                .where(
+                                        idEq(param.getId())
+                                        ,studentEq(param.getStudent())
+                                        ,lectureEq(param.getLecture())
+                                        ,lectureDateEq(param.getLectureDate())
+                                        ,startTimeEq(param.getStartTime())
+                                        ,endTimeEq(param.getEndTime())
+                        ).fetchOne());
+    }
+
+    @Override
+    public List<AppliedLectureResult> findAllByConditionWithResult(AppliedLectureParam param) {
         return dsl.select(
                 Projections.bean(
                         AppliedLectureResult.class
@@ -63,6 +87,20 @@ public class AppliedLectureRepositoryCustomImpl implements AppliedLectureReposit
                         ,endTimeEq(param.getEndTime())
                 ).fetch();
     }
+
+    @Override
+    public List<AppliedLecture> findAllByCondition(AppliedLectureParam param) {
+        return dsl.selectFrom(appliedLecture)
+                .where(
+                        idEq(param.getId())
+                        ,studentEq(param.getStudent())
+                        ,lectureEq(param.getLecture())
+                        ,lectureDateEq(param.getLectureDate())
+                        ,startTimeEq(param.getStartTime())
+                        ,endTimeEq(param.getEndTime())
+                ).fetch();
+    }
+
 
 
 

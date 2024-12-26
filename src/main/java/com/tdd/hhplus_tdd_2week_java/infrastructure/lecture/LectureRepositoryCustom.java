@@ -10,9 +10,37 @@ import java.util.Optional;
 
 public interface LectureRepositoryCustom {
 
+    /**
+     * 단건 조회
+     * - entity 반환
+     * @param param
+     * @return
+     */
     Optional<Lecture> findByCondition(LectureParam param);
 
+    /**
+     * 단건 조회
+     * - result 반환
+     * @param param
+     * @return
+     */
+    Optional<LectureResult> findByConditionWithResult(LectureParam param);
 
-    List<LectureResult> findAllByCondition(LectureParam param);
+    /**
+     * 다건 조회
+     * - entity 리스트 반환
+     * @param param
+     * @return
+     */
+    List<Lecture> findAllByCondition(LectureParam param);
+
+    /**
+     * 다건 조회
+     * - result 리스트 반환
+     * @param param
+     * @return
+     */
+    List<LectureResult> findAllByConditionWithResult(LectureParam param);
+
 
 }

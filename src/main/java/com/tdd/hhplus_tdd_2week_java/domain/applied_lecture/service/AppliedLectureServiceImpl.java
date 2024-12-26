@@ -7,6 +7,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -14,53 +15,80 @@ import java.util.Optional;
 public class AppliedLectureServiceImpl implements AppliedLectureService {
 
     private final AppliedLectureRepository repository;
-    private final AppliedLectureServiceValidation validation;
 
+    /**
+     * CREATE
+     * @param param
+     * @return
+     */
     @Override
     public AppliedLectureResult create(AppliedLectureParam param) {
-        validation.isConditionFieldNotNull(param.getLecture());
-        validation.isConditionFieldNotNull(param.getStudent());
-
-        AppliedLectureParam conditionParam = AppliedLectureParam.builder()
-                .student(param.getStudent())
-                .lecture(param.getLecture())
-                .build();
-
-        Optional<AppliedLecture> optionalAppliedLecture = repository.findByCondition(conditionParam);
-
-        if(optionalAppliedLecture.isPresent()){
-            throw new AppliedLectureSettingException(APPLIED_LECTURE_STATUS.ALREADY_EXIST);
-        }
-
         AppliedLecture newAppliedLecture = convertToEntity(param);
-
-        repository.save(newAppliedLecture);
-
-        return  convertToDto(newAppliedLecture);
+        return convertToDto(repository.save(newAppliedLecture));
     }
 
+    /**
+     * UPDATE
+     * @param exist
+     * @param updateParam
+     * @return
+     */
     @Override
-    public AppliedLectureResult update(AppliedLectureParam findParam, AppliedLectureParam updateParam) {
-        validation.isConditionFieldNotNull(findParam.getLecture());
-        AppliedLectureParam conditionParam = AppliedLectureParam.builder()
-                .lecture(findParam.getLecture())
-                .build();
-
-        Optional<AppliedLecture> optionalAppliedLecture = repository.findByCondition(conditionParam);
-
-        if(optionalAppliedLecture.isEmpty()){
-            throw new AppliedLectureSettingException(APPLIED_LECTURE_STATUS.NOT_EXIST);
-        }
-
-        AppliedLecture findAppliedLecture = optionalAppliedLecture.get();
-        findAppliedLecture.updateLectureInfo(updateParam.getLecture());
-
-        return convertToDto(findAppliedLecture);
+    public AppliedLecture updateWithEntity(AppliedLecture exist, AppliedLectureParam updateParam) {
+        exist.updateLectureInfo(updateParam.getLecture());
+        return exist;
     }
 
+    /**
+     * UPDATE
+     * @param exist
+     * @param updateParam
+     * @return
+     */
     @Override
-    public Optional<AppliedLectureResult> findByCondition(AppliedLectureParam findParam) {
-        return Optional.empty();
+    public AppliedLectureResult updateWithResult(AppliedLecture exist, AppliedLectureParam updateParam) {
+        return convertToDto(updateWithEntity(exist,updateParam));
+    }
+
+    /**
+     * READ
+     * @param condition
+     * @return
+     */
+    @Override
+    public Optional<AppliedLecture> readWithEntity(AppliedLectureParam condition) {
+        return repository.findByCondition(condition);
+    }
+
+    /**
+     * READ
+     * @param condition
+     * @return
+     */
+    @Override
+    public Optional<AppliedLectureResult> readWithResult(AppliedLectureParam condition) {
+        return repository.findByConditionWithResult(condition);
+    }
+
+    /**
+     * READ ALL
+     * @param condition
+     * @return
+     */
+    @Override
+    public List<AppliedLecture> readAllWithEntity(AppliedLectureParam condition) {
+        return repository.findAllByCondition(condition);
+    }
+
+
+    /**
+     * READ ALL
+     * @param condition
+     * @return
+     */
+    @Override
+    public List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition) {
+        return repository.findAllByConditionWithResult(condition);
     }
 
     @Override

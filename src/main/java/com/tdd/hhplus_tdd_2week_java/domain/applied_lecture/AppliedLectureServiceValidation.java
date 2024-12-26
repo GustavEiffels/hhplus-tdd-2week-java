@@ -12,14 +12,13 @@ public interface AppliedLectureServiceValidation {
 
     void isConditionAssign(AppliedLectureParam appliedLectureParam);
 
-
     Student isConditionFieldNotNull(Student student);
 
     Lecture isConditionFieldNotNull(Lecture Lecture);
 
     LocalDate isConditionFieldNotNull(LocalDate localDate);
 
-    Integer isConditionFieldNotNull(Integer integer);
+    Integer   isConditionFieldNotNull(Integer integer);
 
 
 

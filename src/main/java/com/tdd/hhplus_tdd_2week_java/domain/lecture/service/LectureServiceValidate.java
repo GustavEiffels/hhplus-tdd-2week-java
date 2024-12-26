@@ -36,19 +36,12 @@ public class LectureServiceValidate {
 
     }
 
-    public void isConditionAssign(LectureParam lectureParam){
-        if(lectureParam.getId() == null &&
-                lectureParam.getName() == null &&
-                lectureParam.getInstructorName() == null &&
-                lectureParam.getLocation() == null &&
-                lectureParam.getLectureDate() == null &&
-                lectureParam.getIsEnrollmentOpen() == null &&
-                lectureParam.getStartTime() == null &&
-                lectureParam.getEndTime() == null){
-            throw new LectureSettingException(NOT_ENOUGH_FIELD);
-        }
-    }
 
+    /**
+     * 필드 중 StringType 이 null 인지 확인
+     * @param stringFieldVal
+     * @return
+     */
     public String isConditionFieldNotNull(String stringFieldVal){
         if(!StringUtils.hasText(stringFieldVal)){
             throw new LectureSettingException(NOT_ENOUGH_FIELD);
@@ -56,6 +49,11 @@ public class LectureServiceValidate {
         return stringFieldVal;
     }
 
+    /**
+     * 필드 중 Integer 타입 이 null 인지 확인
+     * @param intFieldVal
+     * @return
+     */
     public Integer isConditionFieldNotNull(Integer intFieldVal){
         if(intFieldVal == null){
             throw new LectureSettingException(NOT_ENOUGH_FIELD);
@@ -63,6 +61,11 @@ public class LectureServiceValidate {
         return intFieldVal;
     }
 
+    /**
+     * LocalDate 필드가 null 인지 확인
+     * @param localDateFieldVal
+     * @return
+     */
     public LocalDate isConditionFieldNotNull(LocalDate localDateFieldVal){
         if(localDateFieldVal == null){
             throw new LectureSettingException(NOT_ENOUGH_FIELD);
@@ -70,6 +73,11 @@ public class LectureServiceValidate {
         return localDateFieldVal;
     }
 
+    /**
+     * Boolean 필드가 null 인지 확인
+     * @param boolFieldVal
+     * @return
+     */
     public Boolean isConditionFieldNotNull(Boolean boolFieldVal){
         if(boolFieldVal == null){
             throw new LectureSettingException(NOT_ENOUGH_FIELD);

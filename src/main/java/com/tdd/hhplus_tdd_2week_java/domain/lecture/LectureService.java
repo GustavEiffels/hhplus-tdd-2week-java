@@ -7,17 +7,35 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LectureService {
-    LectureResult           create(LectureParam lecture);
 
-    LectureResult           update(LectureParam findParam,LectureParam updateParam);
-
-    List<LectureResult>     readAllByCondition(LectureParam param);
+    // CREATE
+    LectureResult create(LectureParam lectureParam);
 
 
-    Optional<LectureResult> readByCondition(LectureParam param);
+    // UPDATE
+    LectureResult updateWithResult(Lecture existLecture, LectureParam updateParam);
 
 
-    Lecture       convertToEntity(LectureParam lectureParam);
-    LectureResult convertToDto(Lecture lecture);
+    // UPDATE
+    Lecture updateWithEntity(Lecture existLecture, LectureParam updatedLecture);
+
+    // READ
+    Optional<Lecture> readWithEntity(LectureParam condition);
+
+    // READ
+    Optional<LectureResult> readWithResult(LectureParam condition);
+
+
+    // READ ALL
+    List<Lecture> readAllWithEntity(LectureParam condition);
+
+    /// READ ALL
+    List<LectureResult> readAllWithResult(LectureParam condition);
+
+
+
+    Lecture convertToEntity(LectureParam lectureParam);
+
+    LectureResult convertToResult(Lecture lecture);
 
 }

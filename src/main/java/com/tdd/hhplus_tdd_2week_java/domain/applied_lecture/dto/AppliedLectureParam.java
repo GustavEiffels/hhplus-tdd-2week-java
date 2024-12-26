@@ -13,14 +13,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppliedLectureParam {
-    private Long id;
-    private Lecture lecture;
-
-    private Student student;
-
-    private LocalDate lectureDate;
-
+    private Long                 id;
+    private Lecture         lecture;
+    private Student         student;
+    private LocalDate   lectureDate;
     private Integer       startTime;
-
-    private Integer       endTime;
+    private Integer         endTime;
 }
