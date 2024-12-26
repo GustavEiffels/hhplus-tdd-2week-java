@@ -46,7 +46,7 @@ public class Lecture extends BaseEntity {
     private LocalDate lectureDate       ;
 
     @Column(nullable = false)
-    private String    day               ;
+    private String    dayInfo               ;
 
     @Column(nullable = false)
     private Boolean   isEnrollmentOpen  ;
@@ -72,7 +72,7 @@ public class Lecture extends BaseEntity {
         this.instructorName     = isValid_InstructorName(instructorName);
         this.location           = isValid_Location(location);
         this.lectureDate        = isValid_LectureDate(lectureDate);
-        this.day                = lectureDate.getDayOfWeek().toString();
+        this.dayInfo            = lectureDate.getDayOfWeek().toString();
         this.isEnrollmentOpen   = true;
         this.startTime          = isValid_StartTime(startTime);
         this.endTime            = isValid_EndTime(endTime);
@@ -154,7 +154,7 @@ public class Lecture extends BaseEntity {
     }
 
     public void updateInstructorName(String instructorName){
-        this.name = isValid_InstructorName(instructorName);
+        this.instructorName = isValid_InstructorName(instructorName);
     }
 
     public void updateLocation(String location){
@@ -163,7 +163,7 @@ public class Lecture extends BaseEntity {
 
     public void updateLectureDate(LocalDate lectureDate){
         this.lectureDate = isValid_LectureDate(lectureDate);
-        this.day = lectureDate.getDayOfWeek().toString();
+        this.dayInfo = lectureDate.getDayOfWeek().toString();
     }
 
     public void updateStartTime(int startTime){
@@ -172,12 +172,12 @@ public class Lecture extends BaseEntity {
     }
 
     public void updateEndTime(int endTime){
-        this.startTime = isValid_EndTime(endTime);
+        this.endTime = isValid_EndTime(endTime);
         isValid_RunningTime(this.startTime,endTime);
     }
 
-    public void updateEnrollmentOpen(){
-        this.isEnrollmentOpen = !this.isEnrollmentOpen;
+    public void updateEnrollmentOpen(boolean isEnrollmentOpen){
+        this.isEnrollmentOpen = isEnrollmentOpen;
     }
 
 }

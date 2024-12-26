@@ -11,8 +11,6 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Table(name = "applied_lecture")
 public class AppliedLecture extends BaseEntity {
@@ -31,11 +29,24 @@ public class AppliedLecture extends BaseEntity {
     @JoinColumn(name = "student")
     private Student   student;
 
+    public void updateLectureInfo(Lecture lecture){
+        this.lectureDate = lecture.getLectureDate();
+        this.startTime   = lecture.getStartTime();
+        this.endTime     = lecture.getEndTime();
+    }
+
+    public AppliedLecture(Lecture lecture,Student student){
+        this.lecture = lecture;
+        this.student = student;
+        this.lectureDate = lecture.getLectureDate();
+        this.startTime   = lecture.getStartTime();
+        this.endTime     = lecture.getEndTime();
+    }
+
     private LocalDate lectureDate;
 
     private int       startTime;
 
     private int       endTime;
-
 
 }
