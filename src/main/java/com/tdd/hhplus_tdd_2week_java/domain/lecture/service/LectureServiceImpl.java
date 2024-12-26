@@ -13,12 +13,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdd.hhplus_tdd_2week_java.domain.lecture.LECTURE_STATUS.NOT_FOUND_LECTURE;
 import static org.springframework.util.StringUtils.*;
 
 @Service
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository  repository     ;
+    private final LectureServiceValidate validate   ;
 
     @Override
     public LectureResult create(LectureParam lectureParam) {
@@ -72,6 +74,20 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public List<LectureResult> readAllWithResult(LectureParam condition) {
         return repository.findAllByConditionWithResult(condition);
+    }
+
+    @Override
+    public Lecture isLectureExist(Long lectureId) {
+        validate.isConditionFieldNotNull(lectureId);
+
+        Optional<Lecture> optionalLecture =
+            readWithEntity(LectureParam.builder().id(lectureId).build());
+
+        if(optionalLecture.isEmpty()){
+            throw new LectureSettingException(NOT_FOUND_LECTURE);
+        }
+
+        return optionalLecture.get();
     }
 
     @Override

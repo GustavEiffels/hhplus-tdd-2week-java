@@ -33,6 +33,9 @@ public interface LectureService {
     List<LectureResult> readAllWithResult(LectureParam condition);
 
 
+    Lecture isLectureExist(Long lectureId);
+
+
 
     Lecture convertToEntity(LectureParam lectureParam);
 

@@ -12,6 +12,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,6 +104,29 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
                 .from(student)
                 .innerJoin(appliedLecture).on(appliedLecture.student.id.eq(userid))
                 .innerJoin(lecture).on(lecture.eq(appliedLecture.lecture))
+                .fetch();
+    }
+
+    @Override
+    public List<LectureResult> getLectureResult(Long userid, LocalDate localDate) {
+        return dsl.select(
+                        Projections.bean(
+                                LectureResult.class,
+                                lecture.id.as("id"),
+                                lecture.name.as("name"),
+                                lecture.instructorName.as("instructorName"),
+                                lecture.location.as("location"),
+                                lecture.lectureDate.as("lectureDate"),
+                                lecture.dayInfo.as("dayInfo"),
+                                lecture.startTime.as("startTime"),
+                                lecture.endTime.as("endTime"),
+                                lecture.isEnrollmentOpen.as("isEnrollmentOpen")
+                        )
+                )
+                .from(student)
+                .innerJoin(appliedLecture).on(appliedLecture.student.id.eq(userid))
+                .innerJoin(lecture).on(lecture.eq(appliedLecture.lecture)
+                        .and(lecture.lectureDate.eq(localDate)))
                 .fetch();
     }
 

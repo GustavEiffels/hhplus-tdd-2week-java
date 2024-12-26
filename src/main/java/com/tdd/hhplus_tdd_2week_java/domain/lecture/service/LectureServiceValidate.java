@@ -84,4 +84,17 @@ public class LectureServiceValidate {
         }
         return boolFieldVal;
     }
+
+    /**
+     * LONG 필드가 null 인지 확인
+     * @param longFieldVal
+     * @return
+     */
+    public Long isConditionFieldNotNull(Long longFieldVal){
+        if(longFieldVal == null){
+            throw new LectureSettingException(NOT_ENOUGH_FIELD);
+        }
+        return longFieldVal;
+    }
 }
+

@@ -4,6 +4,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,12 @@ public interface StudentService {
     // JOIN
     List<LectureResult> readLectureResultListById(Long userid);
 
+
+    // isExistStudent
+    Student isExistStudent(Long userId);
+
+
+    List<LectureResult> getTodaySchedule(Long userId, LocalDate localDate);
 
 
     StudentResult convertToDto(Student student);

@@ -11,17 +11,18 @@ import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.ALREADY_EXIST;
-import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.NOT_EXIST_STUDENT;
+import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.*;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository repository;
+    private final StudentServiceValidate studentServiceValidate;
 
     @Override
     public StudentResult create(StudentParam studentParam) {
@@ -52,6 +53,29 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<LectureResult> readLectureResultListById(Long userid) {
         return repository.getLectureResultByUserId(userid);
+    }
+
+    @Override
+    public Student isExistStudent(Long userId) {
+        studentServiceValidate.isConditionFieldNotNull(userId);
+        Optional<Student> optionalStudent = readByCondition(StudentParam.builder().id(userId).build());
+
+        if(optionalStudent.isEmpty()){
+            throw new StudentSettingException(NOT_EXIST_STUDENT);
+        }
+
+        return optionalStudent.get();
+    }
+
+    @Override
+    public List<LectureResult> getTodaySchedule(Long userId, LocalDate localDate) {
+        isExistStudent(userId);
+
+        if(localDate == null){
+            throw new StudentSettingException(NOT_ENOUGH_FIELD);
+        }
+
+        return repository.getLectureResult(userId,localDate);
     }
 
     @Override

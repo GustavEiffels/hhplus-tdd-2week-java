@@ -25,4 +25,21 @@ public interface LectureApiDto {
     class FindByLocalRes extends ResponseDto {
         private List<LectureResult> lectureList;
     }
+
+    @Getter
+    @Setter
+    @Builder
+    class ApplyLectureReq{
+        private Long userId;
+        private Long lectureId;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder
+    class ApplyLectureRes extends ResponseDto{
+
+    }
+
+
 }

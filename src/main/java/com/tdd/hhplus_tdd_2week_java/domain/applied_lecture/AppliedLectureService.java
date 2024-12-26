@@ -2,6 +2,9 @@ package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture;
 
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureResult;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
+import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
+import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,9 @@ public interface AppliedLectureService {
 
     // READ ALL
     List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition);
+
+
+    Optional<AppliedLecture> isExistAppliedLecture(AppliedLectureParam appliedLectureParam);
 
 
     AppliedLectureResult            convertToDto(AppliedLecture appliedLecture);

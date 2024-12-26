@@ -7,6 +7,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +23,8 @@ public interface StudentRepositoryCustom {
 
 
     List<LectureResult> getLectureResultByUserId(Long userid);
+
+    List<LectureResult> getLectureResult(Long userid, LocalDate localDate);
 
 
 }

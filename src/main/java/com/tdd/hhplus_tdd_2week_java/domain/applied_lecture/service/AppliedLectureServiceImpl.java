@@ -1,6 +1,5 @@
 package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.service;
 
-import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.AppliedLectureSettingException;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.*;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureResult;
@@ -15,6 +14,7 @@ import java.util.Optional;
 public class AppliedLectureServiceImpl implements AppliedLectureService {
 
     private final AppliedLectureRepository repository;
+    private final AppliedLectureServiceValidation validation;
 
     /**
      * CREATE
@@ -89,6 +89,13 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
     @Override
     public List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition) {
         return repository.findAllByConditionWithResult(condition);
+    }
+
+    @Override
+    public Optional<AppliedLecture> isExistAppliedLecture(AppliedLectureParam appliedLectureParam) {
+        validation.isConditionFieldNotNull(appliedLectureParam.getStudent());
+        validation.isConditionFieldNotNull(appliedLectureParam.getLecture());
+        return readWithEntity(appliedLectureParam);
     }
 
     @Override
