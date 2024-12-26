@@ -9,11 +9,15 @@ import java.util.Optional;
 
 public interface AppliedLectureRepositoryCustom {
 
+    Optional<AppliedLecture>      findByIdWithLock(AppliedLectureParam param);
+
     Optional<AppliedLecture>       findByCondition(AppliedLectureParam param);
 
     Optional<AppliedLectureResult> findByConditionWithResult(AppliedLectureParam param);
 
     List<AppliedLecture>           findAllByCondition(AppliedLectureParam param);
+
+    List<AppliedLecture>           findAllByConditionLock(AppliedLectureParam param);
 
     List<AppliedLectureResult>     findAllByConditionWithResult(AppliedLectureParam param);
 }

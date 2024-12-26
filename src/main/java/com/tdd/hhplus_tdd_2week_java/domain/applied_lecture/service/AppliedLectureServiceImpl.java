@@ -80,6 +80,11 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         return repository.findAllByCondition(condition);
     }
 
+    @Override
+    public List<AppliedLecture> readAllWithEntityLock(AppliedLectureParam condition) {
+        return repository.findAllByConditionLock(condition);
+    }
+
 
     /**
      * READ ALL
@@ -96,6 +101,11 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         validation.isConditionFieldNotNull(appliedLectureParam.getStudent());
         validation.isConditionFieldNotNull(appliedLectureParam.getLecture());
         return readWithEntity(appliedLectureParam);
+    }
+
+    @Override
+    public Optional<AppliedLecture> isExistAppliedLectureWithLock(AppliedLectureParam appliedLectureParam) {
+        return Optional.empty();
     }
 
     @Override

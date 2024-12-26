@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -19,6 +20,16 @@ import static org.springframework.util.StringUtils.*;
 public class LectureRepositoryCustomImpl implements LectureRepositoryCustom {
     private final JPAQueryFactory dsl;
 
+
+    @Override
+    public Optional<Lecture> findByIdWithLock(Long lectureId) {
+        return Optional.ofNullable(
+                dsl.selectFrom(lecture)
+                        .where(lecture.id.eq(lectureId))
+                        .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+                        .fetchOne()
+        );
+    }
 
     @Override
     public Optional<Lecture> findByCondition(LectureParam param) {

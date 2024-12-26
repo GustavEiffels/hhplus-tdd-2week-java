@@ -13,6 +13,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.infrastructure.lecture.LectureRepositoryCustom;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +27,17 @@ import static com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.QAppliedLectu
 public class AppliedLectureRepositoryCustomImpl implements AppliedLectureRepositoryCustom {
     private final JPAQueryFactory dsl;
 
+
+    @Override
+    public Optional<AppliedLecture> findByIdWithLock(AppliedLectureParam param) {
+        return Optional.ofNullable(
+                dsl.selectFrom(appliedLecture)
+                        .where(
+                                idEq(param.getId())
+                                ,studentEq(param.getStudent())
+                                ,lectureEq(param.getLecture())
+                        ).setLockMode(LockModeType.PESSIMISTIC_WRITE).fetchOne());
+    }
 
     @Override
     public Optional<AppliedLecture> findByCondition(AppliedLectureParam param) {
@@ -101,7 +113,18 @@ public class AppliedLectureRepositoryCustomImpl implements AppliedLectureReposit
                 ).fetch();
     }
 
-
+    @Override
+    public List<AppliedLecture> findAllByConditionLock(AppliedLectureParam param) {
+        return dsl.selectFrom(appliedLecture)
+                .where(
+                        idEq(param.getId())
+                        ,studentEq(param.getStudent())
+                        ,lectureEq(param.getLecture())
+                        ,lectureDateEq(param.getLectureDate())
+                        ,startTimeEq(param.getStartTime())
+                        ,endTimeEq(param.getEndTime())
+                ).setLockMode(LockModeType.PESSIMISTIC_READ).fetch();
+    }
 
 
     private BooleanExpression idEq(Long id){

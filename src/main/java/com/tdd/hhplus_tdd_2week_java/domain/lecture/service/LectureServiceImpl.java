@@ -91,6 +91,19 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
+    public Lecture isLectureExistUseLock(Long lectureId) {
+        validate.isConditionFieldNotNull(lectureId);
+
+        Optional<Lecture> optionalLecture = repository.findByIdWithLock(lectureId);
+
+        if(optionalLecture.isEmpty()){
+            throw new LectureSettingException(NOT_FOUND_LECTURE);
+        }
+
+        return optionalLecture.get();
+    }
+
+    @Override
     public Lecture convertToEntity(LectureParam lectureParam) {
         return new Lecture(
                 lectureParam.getName(),

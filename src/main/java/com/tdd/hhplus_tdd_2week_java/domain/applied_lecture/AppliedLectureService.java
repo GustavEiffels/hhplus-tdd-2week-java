@@ -30,11 +30,15 @@ public interface AppliedLectureService {
     // READ ALL
     List<AppliedLecture> readAllWithEntity(AppliedLectureParam condition);
 
+    List<AppliedLecture> readAllWithEntityLock(AppliedLectureParam condition);
+
     // READ ALL
     List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition);
 
 
     Optional<AppliedLecture> isExistAppliedLecture(AppliedLectureParam appliedLectureParam);
+
+    Optional<AppliedLecture> isExistAppliedLectureWithLock(AppliedLectureParam appliedLectureParam);
 
 
     AppliedLectureResult            convertToDto(AppliedLecture appliedLecture);
