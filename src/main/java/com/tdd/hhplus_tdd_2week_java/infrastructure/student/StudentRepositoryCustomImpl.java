@@ -1,12 +1,15 @@
 package com.tdd.hhplus_tdd_2week_java.infrastructure.student;
 
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.Student;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentParam;
+import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.tdd.hhplus_tdd_2week_java.domain.studuent.QStudent.student;
@@ -27,6 +30,51 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom{
                     .fetchOne()
         );
     }
+
+    @Override
+    public Optional<StudentResult> findByConditionWithResult(StudentParam condition) {
+        return Optional.ofNullable(
+                dsl.select(
+                                Projections.bean(
+                                        StudentResult.class,
+                                         student.id.as("id")
+                                        ,student.name.as("name")
+                                        ,student.studentCode.as("studentCode")
+                                )
+                        )
+                        .from(student)
+                        .where(
+                                nameEq(condition.getName()),
+                                studentCodeEq(condition.getStudentCode()))
+                        .fetchOne()
+        );
+    }
+
+    @Override
+    public List<Student> findAllByCondition(StudentParam condition) {
+        return dsl.selectFrom(student)
+                .where(
+                        nameEq(condition.getName()),
+                        studentCodeEq(condition.getStudentCode())).fetch();
+    }
+
+    @Override
+    public List<StudentResult> findAllByConditionWithResult(StudentParam condition) {
+        return
+                dsl.select(
+                                Projections.bean(
+                                        StudentResult.class,
+                                        student.id.as("id")
+                                        ,student.name.as("name")
+                                        ,student.studentCode.as("studentCode")
+                                )
+                        )
+                        .from(student)
+                .where(
+                        nameEq(condition.getName()),
+                        studentCodeEq(condition.getStudentCode())).fetch();
+    }
+
     private BooleanExpression idEq(Long id){
         return id != null ? student.id.eq(id):null;
     }

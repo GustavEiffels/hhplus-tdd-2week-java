@@ -10,6 +10,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.studuent.dto.StudentResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.ALREADY_EXIST;
@@ -20,22 +21,32 @@ import static com.tdd.hhplus_tdd_2week_java.domain.studuent.STUDENT_STATUS.NOT_E
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository repository;
-    private final StudentServiceValidate serviceValidate;
 
     @Override
     public StudentResult create(StudentParam studentParam) {
-        serviceValidate.isConditionFieldNotNull(studentParam.getStudentCode());
+        Student newStudent = convertToEntity(studentParam);
+        return convertToDto(repository.save(newStudent));
 
-        Optional<Student> findByCondition = repository.findByCondition(studentParam);
+    }
 
-        if(findByCondition.isPresent()){
-            throw new StudentSettingException(ALREADY_EXIST);
-        }
+    @Override
+    public Optional<Student> readByCondition(StudentParam condition) {
+        return Optional.empty();
+    }
 
-        Student newStudent = repository.save(convertToEntity(studentParam));
+    @Override
+    public Optional<StudentResult> readByConditionWithResult(StudentParam condition) {
+        return Optional.empty();
+    }
 
-        return convertToDto(newStudent);
+    @Override
+    public List<Student> readAllByCondition(StudentParam condition) {
+        return null;
+    }
 
+    @Override
+    public List<StudentResult> readAllByConditionWithResult(StudentParam condition) {
+        return null;
     }
 
 
