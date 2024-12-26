@@ -26,29 +26,27 @@ public class StudentServiceImpl implements StudentService {
     public StudentResult create(StudentParam studentParam) {
         Student newStudent = convertToEntity(studentParam);
         return convertToDto(repository.save(newStudent));
-
     }
 
     @Override
     public Optional<Student> readByCondition(StudentParam condition) {
-        return Optional.empty();
+        return repository.findByCondition(condition);
     }
 
     @Override
     public Optional<StudentResult> readByConditionWithResult(StudentParam condition) {
-        return Optional.empty();
+        return repository.findByConditionWithResult(condition);
     }
 
     @Override
     public List<Student> readAllByCondition(StudentParam condition) {
-        return null;
+        return repository.findAllByCondition(condition);
     }
 
     @Override
     public List<StudentResult> readAllByConditionWithResult(StudentParam condition) {
-        return null;
+        return repository.findAllByConditionWithResult(condition);
     }
-
 
     @Override
     public StudentResult convertToDto(Student student) {
