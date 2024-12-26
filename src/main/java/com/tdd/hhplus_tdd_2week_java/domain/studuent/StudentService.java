@@ -7,7 +7,6 @@ public interface StudentService {
 
     StudentResult create(StudentParam studentParam);
 
-
     StudentResult convertToDto(Student student);
 
     Student convertToEntity(StudentParam studentParam);
