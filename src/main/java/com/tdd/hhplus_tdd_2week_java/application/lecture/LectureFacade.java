@@ -43,7 +43,7 @@ public class LectureFacade {
      * @param request
      * @return
      */
-    public ResponseDto findListByLecture(LectureApiDto.FindByLocalReq request){
+    public LectureApiDto.FindByLocalRes findListByLecture(LectureApiDto.FindByLocalReq request){
         // request 객체 null 인지 확인
         lectureServiceValidate.isConditionFieldNotNull(request.getLocalDate());
 

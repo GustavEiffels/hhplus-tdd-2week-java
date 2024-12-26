@@ -20,4 +20,9 @@ public class LectureController {
         return new ResponseEntity<>(lectureFacade.findListByLecture(req), HttpStatus.OK);
     }
 
+    @PostMapping("/apply")
+    public ResponseEntity<ResponseDto> apply(@RequestBody LectureApiDto.ApplyLectureReq req){
+        return new ResponseEntity<>(lectureFacade.applyLecture(req), HttpStatus.OK);
+    }
+
 }

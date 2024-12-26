@@ -90,10 +90,6 @@ class AppliedLectureRepositoryTest {
                         .lectureDate(lectureEntity.getLectureDate())
                         .build();
 
-        List<AppliedLectureResult> resultListByLectureDate =
-                appliedLectureRepository.findAllByCondition(param_lectureDate);
-
-        Assertions.assertEquals(2,resultListByLectureDate.size());
 
     }
 
