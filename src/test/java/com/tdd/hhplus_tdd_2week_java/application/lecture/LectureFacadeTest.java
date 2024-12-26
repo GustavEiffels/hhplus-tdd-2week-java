@@ -6,6 +6,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.APPLIED_LECTURE_STAT
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLecture;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLectureRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.AppliedLectureService;
+import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureService;
@@ -16,6 +17,7 @@ import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentRepository;
 import com.tdd.hhplus_tdd_2week_java.domain.studuent.StudentService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,9 +28,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
 @Transactional
 @ActiveProfiles("test")
+@SpringBootTest
 class LectureFacadeTest {
 
     @Autowired
@@ -89,6 +91,7 @@ class LectureFacadeTest {
     }
 
     @Test
+    @DisplayName("같은 사용자가 동일한 특강에 대해 신청 여러번 할때")
     void 같은_사용자가_동일한_특강에_대해_신청_성공못하게_하기(){
 
         // 0. lecture 와  student 생성
@@ -102,6 +105,8 @@ class LectureFacadeTest {
                 .userId(createStudent.getId())
                 .build();
 
+
+        // 성공
         lectureFacade.applyLecture(req);
 
 
@@ -110,10 +115,15 @@ class LectureFacadeTest {
                         Assertions.assertThrows(AppliedLectureSettingException.class, () -> {
                     lectureFacade.applyLecture(req);
                 });
-                System.out.println(exception.getStatus());
-//                Assertions.assertEquals(APPLIED_LECTURE_STATUS.ALREADY_EXIST,exception.getStatus(),"이미 신청한 강의");
+                Assertions.assertEquals(APPLIED_LECTURE_STATUS.ALREADY_EXIST,exception.getStatus(),"이미 신청한 강의");
             }
 
+            int size  =  appliedLectureRepository.findAllByCondition(
+                    AppliedLectureParam.builder()
+                            .lecture(createLecture)
+                            .student(createStudent).build()).size();
+
+            Assertions.assertEquals(1,size);
     }
 
 }

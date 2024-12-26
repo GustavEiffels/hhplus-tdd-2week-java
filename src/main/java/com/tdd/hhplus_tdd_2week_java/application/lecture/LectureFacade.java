@@ -104,7 +104,7 @@ public class LectureFacade {
         appliedLectureService.create(AppliedLectureParam.builder().lecture(lecture).student(student).build());
 
         // UPDATE
-        if(currentAppliedLecture.size()==29){
+        if(currentAppliedLecture.size() % 30 == 0){
             lectureService.updateWithEntity(lecture,LectureParam.builder().isEnrollmentOpen(false).build());
         }
 
