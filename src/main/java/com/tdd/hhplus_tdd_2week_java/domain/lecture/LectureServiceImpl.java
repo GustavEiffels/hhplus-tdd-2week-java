@@ -1,11 +1,8 @@
-package com.tdd.hhplus_tdd_2week_java.domain.lecture.service;
+package com.tdd.hhplus_tdd_2week_java.domain.lecture;
 
 
 import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.LectureSettingException;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LECTURE_STATUS;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.Lecture;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureRepository;
-import com.tdd.hhplus_tdd_2week_java.domain.lecture.LectureService;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.lecture.dto.LectureResult;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +10,14 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.tdd.hhplus_tdd_2week_java.domain.lecture.LECTURE_STATUS.NOT_FOUND_LECTURE;
 import static org.springframework.util.StringUtils.*;
 
 @Service
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
     private final LectureRepository  repository     ;
+    private final CommonValidation validate   ;
 
     @Override
     public LectureResult create(LectureParam lectureParam) {
@@ -72,6 +71,33 @@ public class LectureServiceImpl implements LectureService {
     @Override
     public List<LectureResult> readAllWithResult(LectureParam condition) {
         return repository.findAllByConditionWithResult(condition);
+    }
+
+    @Override
+    public Lecture isLectureExist(Long lectureId) {
+        validate.isConditionFieldNotNull(lectureId);
+
+        Optional<Lecture> optionalLecture =
+            readWithEntity(LectureParam.builder().id(lectureId).build());
+
+        if(optionalLecture.isEmpty()){
+            throw new LectureSettingException(NOT_FOUND_LECTURE);
+        }
+
+        return optionalLecture.get();
+    }
+
+    @Override
+    public Lecture isLectureExistUseLock(Long lectureId) {
+        validate.isConditionFieldNotNull(lectureId);
+
+        Optional<Lecture> optionalLecture = repository.findByIdWithLock(lectureId);
+
+        if(optionalLecture.isEmpty()){
+            throw new LectureSettingException(NOT_FOUND_LECTURE);
+        }
+
+        return optionalLecture.get();
     }
 
     @Override

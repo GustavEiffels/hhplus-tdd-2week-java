@@ -4,5 +4,4 @@ import com.tdd.hhplus_tdd_2week_java.infrastructure.lecture.LectureRepositoryCus
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LectureRepository extends JpaRepository<Lecture, Long>, LectureRepositoryCustom {
-
 }

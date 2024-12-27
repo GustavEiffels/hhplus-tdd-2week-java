@@ -34,6 +34,12 @@ public interface LectureService {
 
 
 
+
+    Lecture isLectureExist(Long lectureId);
+
+    Lecture isLectureExistUseLock(Long lectureId);
+
+
     Lecture convertToEntity(LectureParam lectureParam);
 
     LectureResult convertToResult(Lecture lecture);

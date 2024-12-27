@@ -11,6 +11,11 @@ import java.util.Optional;
 public interface LectureRepositoryCustom {
 
     /**
+     * PESSIMISTIC
+     */
+    Optional<Lecture> findByIdWithLock(Long lectureId);
+
+    /**
      * 단건 조회
      * - entity 반환
      * @param param

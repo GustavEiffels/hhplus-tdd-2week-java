@@ -34,6 +34,9 @@ public class Lecture extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+//    @Version // 낙관적 락 추가
+//    private Long version;
+
     @Column(nullable = false)
     private String    name              ; // 강의 이름
     @Column(nullable = false)

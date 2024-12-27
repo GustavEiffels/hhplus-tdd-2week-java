@@ -25,13 +25,6 @@ public class LectureSettingException extends DomainSettingException{
     }
 
     private static String convertMessage(LECTURE_STATUS status,String fieldName){
-
-        if(status.equals(LECTURE_STATUS.VALUE_IS_NULL)){
-            return "["+fieldName+"] 값을 받지 않았습니다.";
-        }
-        if(status.equals(LECTURE_STATUS.INVALID_INSTRUCTOR_NAME)){
-            return "강사 이름 한글 또는 영어이고 50자 이내여야 할것";
-        }
-        return null;
+        return status.name();
     }
 }

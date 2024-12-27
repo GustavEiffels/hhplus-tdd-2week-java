@@ -1,9 +1,9 @@
-package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.service;
+package com.tdd.hhplus_tdd_2week_java.domain.applied_lecture;
 
-import com.tdd.hhplus_tdd_2week_java.common.custom_exceptions.AppliedLectureSettingException;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.*;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureParam;
 import com.tdd.hhplus_tdd_2week_java.domain.applied_lecture.dto.AppliedLectureResult;
+import com.tdd.hhplus_tdd_2week_java.domain.common.CommonValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,7 @@ import java.util.Optional;
 public class AppliedLectureServiceImpl implements AppliedLectureService {
 
     private final AppliedLectureRepository repository;
+    private final CommonValidation validation;
 
     /**
      * CREATE
@@ -39,16 +40,7 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         return exist;
     }
 
-    /**
-     * UPDATE
-     * @param exist
-     * @param updateParam
-     * @return
-     */
-    @Override
-    public AppliedLectureResult updateWithResult(AppliedLecture exist, AppliedLectureParam updateParam) {
-        return convertToDto(updateWithEntity(exist,updateParam));
-    }
+
 
     /**
      * READ
@@ -60,35 +52,17 @@ public class AppliedLectureServiceImpl implements AppliedLectureService {
         return repository.findByCondition(condition);
     }
 
-    /**
-     * READ
-     * @param condition
-     * @return
-     */
-    @Override
-    public Optional<AppliedLectureResult> readWithResult(AppliedLectureParam condition) {
-        return repository.findByConditionWithResult(condition);
-    }
 
-    /**
-     * READ ALL
-     * @param condition
-     * @return
-     */
     @Override
-    public List<AppliedLecture> readAllWithEntity(AppliedLectureParam condition) {
-        return repository.findAllByCondition(condition);
+    public List<AppliedLecture> readAllWithEntityLock(AppliedLectureParam condition) {
+        return repository.findAllByConditionLock(condition);
     }
 
 
-    /**
-     * READ ALL
-     * @param condition
-     * @return
-     */
+
     @Override
-    public List<AppliedLectureResult> readAllWithResult(AppliedLectureParam condition) {
-        return repository.findAllByConditionWithResult(condition);
+    public Optional<AppliedLecture> isExistAppliedLectureWithLock(AppliedLectureParam appliedLectureParam) {
+        return repository.findByIdWithLock(appliedLectureParam);
     }
 
     @Override
