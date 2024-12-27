@@ -48,6 +48,8 @@ class LectureFacadeTest {
     @Autowired
     StudentRepository studentRepository;
 
+
+
     public Lecture createLecture(int year, int mon, int day, int start, int end){
         return lectureRepository.save(lectureService.convertToEntity(LectureParam.builder()
                 .name("바보들")
@@ -68,10 +70,12 @@ class LectureFacadeTest {
     }
 
 
+
     /**
      * 날짜 기준으로 신청 가능 목록 API
      * findListByLecture
      */
+    @DisplayName("날짜 기준으로 신청 가능 목록 API")
     @Test
     void findListByLecture(){
         Lecture lecture_0 = createLecture(2024,12,31,10,11);
