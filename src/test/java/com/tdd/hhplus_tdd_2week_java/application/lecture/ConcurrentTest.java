@@ -31,7 +31,7 @@ import java.util.concurrent.Future;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Transactional
+//@Transactional
 @ActiveProfiles("test")
 @SpringBootTest
 class ConcurrentTest {
@@ -73,7 +73,7 @@ class ConcurrentTest {
                                 .name("연습게임")
                                 .instructorName("이조교")
                                 .location("3층 101호")
-                                .lectureDate(LocalDate.of(2024,12,31))
+                                .lectureDate(LocalDate.of(2025,1,7))
                                 .startTime(9)
                                 .endTime(10)
                                 .build()
@@ -120,18 +120,12 @@ class ConcurrentTest {
             }));
         }
 
-        // 대기
-        latch.await();  // 여기서 대기
+        latch.await();
+        executorService.shutdown();
 
-        executorService.shutdown();  // 모든 작업이 끝난 후에 shutdown 호출
-
-        // 성공 및 실패 확인
         int successCount = 0;
         int failureCount = 0;
 
-        // 대기
-        latch.await();
-        executorService.shutdown();
 
 
         for (Future<ResponseDto> future : futures) {
